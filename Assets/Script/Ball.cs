@@ -2,40 +2,40 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private float startSpeed = 5f;
 
-    public Rigidbody2D rb;
-    public float StartSpeed;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        bool isRight = UnityEngine.Random.value >= 0.5f;
-
-        float xVelocity = -1f;
-
-        if (isRight == true)
-        {
-            xVelocity = 1f;
-        }
-
-        float yVelocity = UnityEngine.Random.Range(-1, 1);
-
-
-        rb.linearVelocity = new Vector2(xVelocity * StartSpeed, yVelocity * StartSpeed);
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        Launch();
     }
 
     public void ResetBall()
-{
-    transform.position = Vector3.zero;
+    {
+        transform.position = Vector2.zero;
 
-    Rigidbody2D rb = GetComponent<Rigidbody2D>();
-    if (rb != null)
-        rb.linearVelocity = Vector2.zero;
-}
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+    }
+
+    public void Launch()
+    {
+        if (rb == null)
+        {
+            Debug.LogError("Ball needs a Rigidbody2D.", this);
+            return;
+        }
+
+        float directionX = Random.value < 0.5f ? -1f : 1f;
+        float directionY = Random.Range(-1f, 1f);
+
+        Vector2 direction = new Vector2(directionX, directionY).normalized;
+        rb.linearVelocity = direction * startSpeed;
+    }
 }

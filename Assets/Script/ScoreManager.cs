@@ -9,6 +9,11 @@ public class ScoreManager : MonoBehaviour
     private int playerScore;
     private int cpuScore;
 
+    private void Start()
+    {
+        UpdateUI();
+    }
+
     public void PlayerScores()
     {
         playerScore++;
@@ -23,7 +28,10 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        playerScoreText.text = playerScore.ToString();
-        cpuScoreText.text = cpuScore.ToString();
+        if (playerScoreText != null)
+            playerScoreText.text = playerScore.ToString();
+
+        if (cpuScoreText != null)
+            cpuScoreText.text = cpuScore.ToString();
     }
 }

@@ -393,8 +393,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 284, y: 174}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 134, y: 76}
+  m_SizeDelta: {x: 80.2728, y: 29.1173}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &501759703
 MonoBehaviour:
@@ -443,10 +443,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 19.65
+  m_fontSizeBase: 19.8
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -482,7 +482,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 2.7843628, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -644,7 +644,7 @@ GameObject:
   - component: {fileID: 540881906}
   - component: {fileID: 540881905}
   - component: {fileID: 540881904}
-  - component: {fileID: 540881903}
+  - component: {fileID: 540881907}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -652,20 +652,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &540881903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 540881902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e1ed7d6f52d541fea6c86588e761475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
-  playerScoreText: {fileID: 0}
-  cpuScoreText: {fileID: 501759703}
 --- !u!114 &540881904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,8 +664,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b5d0076982f458983700c8ec26705b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoalZone
-  playerScoresHere: 1
-  scoreManager: {fileID: 540881903}
+  playerScoresHere: 0
+  scoreManager: {fileID: 540881907}
   ball: {fileID: 640755962}
 --- !u!61 &540881905
 BoxCollider2D:
@@ -711,7 +697,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -742,6 +728,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &540881907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540881902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e1ed7d6f52d541fea6c86588e761475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
+  playerScoreText: {fileID: 0}
+  cpuScoreText: {fileID: 501759703}
 --- !u!1 &546183957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,7 +1081,7 @@ GameObject:
   - component: {fileID: 640755962}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ball
   rb: {fileID: 640755958}
-  StartSpeed: 5
+  startSpeed: 5
 --- !u!1 &828092237
 GameObject:
   m_ObjectHideFlags: 0
@@ -1326,6 +1326,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &984546554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: New action map/New action
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: bb6d9e5f94e1848dc85b9dc342f13cdb, type: 3}
+  m_ActionId: 5c12e9e5-ee81-4183-b731-49c26da45474
 --- !u!1 &1617197544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,8 +1374,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -252, y: 170}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -134.16751, y: 74.17653}
+  m_SizeDelta: {x: 81.6649, y: 22.1564}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1617197546
 MonoBehaviour:
@@ -1410,10 +1424,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 19.8
+  m_fontSizeBase: 22.42
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1619,20 +1633,8 @@ MonoBehaviour:
   minY: -4
   maxY: 4
   deadZone: 0.15
---- !u!114 &1983900513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
-  m_Name: Player/Move
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
-  m_Asset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
+  followBallChance: 0.5
+  decisionInterval: 0.8
 --- !u!1 &2064096341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1786,7 +1788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 5
-  moveAction: {fileID: 1983900513}
+  moveAction: {fileID: 984546554}
 --- !u!114 &2064096346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1799,7 +1801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: bb6d9e5f94e1848dc85b9dc342f13cdb, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -1814,7 +1816,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 
+  m_DefaultActionMap: New action map
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &2097128498
