@@ -6,6 +6,8 @@ public class GoalZone : MonoBehaviour
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private Ball ball;
 
+    [SerializeField] private RunManager runManager;
+
     private bool hasScored;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -22,13 +24,17 @@ public class GoalZone : MonoBehaviour
         hasScored = true;
 
         if (playerScoresHere)
+        {
             scoreManager.PlayerScores();
+            if (runManager != null)
+    runManager.PlayerScoredRound();
+        }
         else
             scoreManager.CpuScores();
 
         ball.ResetBall();
         ball.Launch();
-
+        
         // Prevent another score until the ball leaves this trigger.
     }
 

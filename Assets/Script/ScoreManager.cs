@@ -6,8 +6,12 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TMP_Text playerScoreText;
     [SerializeField] private TMP_Text cpuScoreText;
 
+    [SerializeField] private RunManager runManager;
+
     private int playerScore;
     private int cpuScore;
+
+    public RunManager RunManager { get => runManager; set => runManager = value; }
 
     private void Start()
     {
@@ -25,6 +29,8 @@ public class ScoreManager : MonoBehaviour
         cpuScore++;
         UpdateUI();
     }
+
+
 
     private void UpdateUI()
     {

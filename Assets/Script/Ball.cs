@@ -24,6 +24,12 @@ public class Ball : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
     }
 
+    public void SetSpeed(float speed)
+{
+    if (rb != null && rb.linearVelocity.sqrMagnitude > 0f)
+        rb.linearVelocity = rb.linearVelocity.normalized * speed;
+}
+
     public void Launch()
     {
         if (rb == null)
