@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunManager
   ball: {fileID: 640755962}
+  playerPaddle: {fileID: 2064096344}
   upgradePanel: {fileID: 2065388886}
   upgradeButtons:
   - {fileID: 1256961160}
@@ -160,6 +161,7 @@ MonoBehaviour:
   - {fileID: 1021476931}
   startingBallSpeed: 5
   speedIncreasePerRound: 0.5
+  paddleWidthIncrease: 0.5
 --- !u!4 &37942683
 Transform:
   m_ObjectHideFlags: 0
@@ -571,7 +573,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 383, y: 214}
+  m_AnchoredPosition: {x: 133.86, y: 83.191}
   m_SizeDelta: {x: 80.2728, y: 29.1173}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &501759703
@@ -822,7 +824,6 @@ GameObject:
   - component: {fileID: 540881906}
   - component: {fileID: 540881905}
   - component: {fileID: 540881904}
-  - component: {fileID: 540881907}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -843,7 +844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoalZone
   playerScoresHere: 0
-  scoreManager: {fileID: 540881907}
+  scoreManager: {fileID: 647993483}
   ball: {fileID: 640755962}
   runManager: {fileID: 37942682}
 --- !u!61 &540881905
@@ -907,21 +908,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &540881907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 540881902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e1ed7d6f52d541fea6c86588e761475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
-  playerScoreText: {fileID: 0}
-  cpuScoreText: {fileID: 501759703}
-  runManager: {fileID: 0}
 --- !u!1 &546183957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1427,6 +1413,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ball
   rb: {fileID: 640755958}
   startSpeed: 5
+--- !u!1 &647993482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 647993484}
+  - component: {fileID: 647993483}
+  m_Layer: 0
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &647993483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647993482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e1ed7d6f52d541fea6c86588e761475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
+  playerScoreText: {fileID: 1617197546}
+  cpuScoreText: {fileID: 501759703}
+  runManager: {fileID: 37942682}
+  cpu: {fileID: 1926998391}
+--- !u!4 &647993484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647993482}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 40.58377, y: 161.4141, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &818018244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,7 +1983,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: 214}
+  m_AnchoredPosition: {x: -133.17, y: 86.672}
   m_SizeDelta: {x: 81.6649, y: 22.1564}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1617197546
@@ -2347,6 +2381,9 @@ MonoBehaviour:
   deadZone: 0.15
   followBallChance: 0.5
   decisionInterval: 0.8
+  gameBall: {fileID: 640755962}
+  paddleWidthIncrease: 0.5
+  ballSpeedIncrease: 1
 --- !u!1 &2010645853
 GameObject:
   m_ObjectHideFlags: 0
@@ -2879,7 +2916,6 @@ GameObject:
   - component: {fileID: 2097128502}
   - component: {fileID: 2097128501}
   - component: {fileID: 2097128500}
-  - component: {fileID: 2097128499}
   m_Layer: 0
   m_Name: Goal (1)
   m_TagString: Untagged
@@ -2887,21 +2923,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2097128499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2097128498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e1ed7d6f52d541fea6c86588e761475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
-  playerScoreText: {fileID: 1617197546}
-  cpuScoreText: {fileID: 0}
-  runManager: {fileID: 0}
 --- !u!114 &2097128500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2915,7 +2936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoalZone
   playerScoresHere: 1
-  scoreManager: {fileID: 2097128499}
+  scoreManager: {fileID: 647993483}
   ball: {fileID: 640755962}
   runManager: {fileID: 37942682}
 --- !u!61 &2097128501
@@ -2987,6 +3008,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 828092240}
   - {fileID: 37942683}
+  - {fileID: 647993484}
   - {fileID: 640755961}
   - {fileID: 2064096344}
   - {fileID: 1926998390}
