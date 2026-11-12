@@ -6,6 +6,7 @@ public class RunManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Ball ball;
+    [SerializeField] private Transform playerPaddle;
     [SerializeField] private GameObject upgradePanel;
     [SerializeField] private Button[] upgradeButtons;
     [SerializeField] private TMP_Text[] upgradeButtonLabels;
@@ -13,16 +14,18 @@ public class RunManager : MonoBehaviour
     [Header("Run settings")]
     [SerializeField] private float startingBallSpeed = 5f;
     [SerializeField] private float speedIncreasePerRound = 0.5f;
+    [SerializeField] private float paddleWidthIncrease = 0.5f;
 
     private int round = 1;
     private float speedBonus;
+    private float scoreMultiplier = 1f;
     private bool choosingUpgrade;
 
-    private string[] upgradeNames =
+    private readonly string[] upgradeNames =
     {
+        "Wider paddle",
         "Faster ball",
-        "Extra life",
-        "Bonus score"
+        "Score multiplier"
     };
 
     private void Start()
@@ -31,20 +34,22 @@ public class RunManager : MonoBehaviour
             upgradePanel.SetActive(false);
     }
 
-    // Call this when the player scores.
     public void PlayerScoredRound()
     {
         if (choosingUpgrade) return;
 
         choosingUpgrade = true;
         Time.timeScale = 0f;
-        upgradePanel.SetActive(true);
+
+        if (upgradePanel != null)
+            upgradePanel.SetActive(true);
 
         for (int i = 0; i < upgradeButtons.Length; i++)
         {
             int upgradeIndex = i;
             upgradeButtons[i].onClick.RemoveAllListeners();
-            upgradeButtons[i].onClick.AddListener(() => ChooseUpgrade(upgradeIndex));
+            upgradeButtons[i].onClick.AddListener(
+                () => ChooseUpgrade(upgradeIndex));
 
             if (i < upgradeButtonLabels.Length)
                 upgradeButtonLabels[i].text = upgradeNames[i];
@@ -55,23 +60,30 @@ public class RunManager : MonoBehaviour
     {
         switch (index)
         {
-            case 0: // Faster ball
+            case 0: // Wider paddle
+                if (playerPaddle != null)
+                {
+                    Vector3 scale = playerPaddle.localScale;
+                    scale.y += paddleWidthIncrease;
+                    playerPaddle.localScale = scale;
+                }
+                break;
+
+            case 1: // Faster ball
                 speedBonus += 1f;
                 break;
 
-            case 1: // Extra life placeholder
-                Debug.Log("Add your extra-life logic here.");
-                break;
-
-            case 2: // Bonus score placeholder
-                Debug.Log("Add your bonus-score logic here.");
+            case 2: // Score multiplier
+                scoreMultiplier += 1f;
                 break;
 
             default:
                 return;
         }
 
-        upgradePanel.SetActive(false);
+        if (upgradePanel != null)
+            upgradePanel.SetActive(false);
+
         choosingUpgrade = false;
         round++;
 
@@ -85,7 +97,12 @@ public class RunManager : MonoBehaviour
             ball.SetSpeed(newSpeed);
         }
 
-        Debug.Log($"Round {round} started.");
+        Debug.Log($"Round {round} started. Score multiplier: {scoreMultiplier}");
+    }
+
+    public int GetScoreMultiplier()
+    {
+        return Mathf.RoundToInt(scoreMultiplier);
     }
 
     private void OnDestroy()

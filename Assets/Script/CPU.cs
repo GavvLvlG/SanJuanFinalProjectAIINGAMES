@@ -12,8 +12,41 @@ public class CPU : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float followBallChance = 0.65f;
     [SerializeField] private float decisionInterval = 0.8f;
 
+    [SerializeField] private Ball gameBall;
+    [SerializeField] private float paddleWidthIncrease = 0.5f;
+    [SerializeField] private float ballSpeedIncrease = 1f;
+
     private float targetY;
     private float nextDecisionTime;
+
+    private float cpuSpeedBonus;
+
+public void ChooseRandomUpgrade()
+{
+    int upgrade = Random.Range(0, 3);
+
+    switch (upgrade)
+    {
+        case 0: // Wider CPU paddle
+            Vector3 scale = transform.localScale;
+            scale.x += paddleWidthIncrease;
+            transform.localScale = scale;
+            break;
+
+        case 1: // Faster ball
+            cpuSpeedBonus += ballSpeedIncrease;
+
+            if (gameBall != null)
+                gameBall.SetSpeed(5f + cpuSpeedBonus);
+            break;
+
+        case 2: // CPU score bonus
+            // Add CPU score bonus logic here if desired.
+            break;
+    }
+
+    Debug.Log($"CPU chose upgrade {upgrade}.");
+}
 
     private void Start()
     {

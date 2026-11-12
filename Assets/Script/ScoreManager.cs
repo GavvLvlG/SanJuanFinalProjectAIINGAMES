@@ -5,13 +5,13 @@ public class ScoreManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text playerScoreText;
     [SerializeField] private TMP_Text cpuScoreText;
-
     [SerializeField] private RunManager runManager;
 
     private int playerScore;
     private int cpuScore;
 
-    public RunManager RunManager { get => runManager; set => runManager = value; }
+    [SerializeField] private CPU cpu;
+    private int nextUpgradeScore = 5;
 
     private void Start()
     {
@@ -20,8 +20,23 @@ public class ScoreManager : MonoBehaviour
 
     public void PlayerScores()
     {
-        playerScore++;
+        int multiplier = runManager != null
+            ? runManager.GetScoreMultiplier()
+            : 1;
+
+        playerScore += multiplier;
         UpdateUI();
+
+        if (playerScore >= nextUpgradeScore)
+{
+    nextUpgradeScore += 5;
+
+    if (cpu != null)
+        cpu.ChooseRandomUpgrade();
+
+    if (runManager != null)
+        runManager.PlayerScoredRound();
+}
     }
 
     public void CpuScores()
@@ -29,8 +44,6 @@ public class ScoreManager : MonoBehaviour
         cpuScore++;
         UpdateUI();
     }
-
-
 
     private void UpdateUI()
     {
