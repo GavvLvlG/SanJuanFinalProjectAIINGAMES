@@ -47,11 +47,12 @@ public class ScoreManager : MonoBehaviour, IScoreManager
     }
 
     public void ResetScores()
-    {
-        playerScore = 0;
-        cpuScore = 0;
-        UpdateUI();
-    }
+{
+    playerScore = 0;
+    cpuScore = 0;
+    pointsSinceUpgrade = 0;
+    UpdateUI();
+}
 
     private void UpdateUI()
     {
