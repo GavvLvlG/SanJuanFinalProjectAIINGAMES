@@ -1,7 +1,14 @@
 using TMPro;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviour
+public interface IScoreManager
+{
+    void CpuScores();
+    void PlayerScores();
+    void ResetScores();
+}
+
+public class ScoreManager : MonoBehaviour, IScoreManager
 {
     [SerializeField] private TMP_Text playerScoreText;
     [SerializeField] private TMP_Text cpuScoreText;
@@ -9,9 +16,7 @@ public class ScoreManager : MonoBehaviour
 
     private int playerScore;
     private int cpuScore;
-
-    [SerializeField] private CPU cpu;
-    private int nextUpgradeScore = 5;
+    private int pointsSinceUpgrade;
 
     private void Start()
     {
@@ -20,28 +25,31 @@ public class ScoreManager : MonoBehaviour
 
     public void PlayerScores()
     {
-        int multiplier = runManager != null
+        int points = runManager != null
             ? runManager.GetScoreMultiplier()
             : 1;
 
-        playerScore += multiplier;
+        playerScore += points;
+        pointsSinceUpgrade += points;
         UpdateUI();
 
-        if (playerScore >= nextUpgradeScore)
-{
-    nextUpgradeScore += 5;
-
-    if (cpu != null)
-        cpu.ChooseRandomUpgrade();
-
-    if (runManager != null)
-        runManager.PlayerScoredRound();
-}
+        if (pointsSinceUpgrade >= 5 && runManager != null)
+        {
+            pointsSinceUpgrade -= 5;
+            runManager.PlayerScoredRound();
+        }
     }
 
     public void CpuScores()
     {
         cpuScore++;
+        UpdateUI();
+    }
+
+    public void ResetScores()
+    {
+        playerScore = 0;
+        cpuScore = 0;
         UpdateUI();
     }
 

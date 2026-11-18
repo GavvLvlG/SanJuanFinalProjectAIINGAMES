@@ -2,11 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class RunManager : MonoBehaviour
+public interface IRunManager
+{
+    global::System.Int32 GetScoreMultiplier();
+    void PlayerScoredRound();
+}
+
+public class RunManager : MonoBehaviour, IRunManager
 {
     [Header("References")]
     [SerializeField] private Ball ball;
     [SerializeField] private Transform playerPaddle;
+    [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private GameObject upgradePanel;
     [SerializeField] private Button[] upgradeButtons;
     [SerializeField] private TMP_Text[] upgradeButtonLabels;
@@ -36,7 +43,8 @@ public class RunManager : MonoBehaviour
 
     public void PlayerScoredRound()
     {
-        if (choosingUpgrade) return;
+        if (choosingUpgrade)
+            return;
 
         choosingUpgrade = true;
         Time.timeScale = 0f;
@@ -47,6 +55,7 @@ public class RunManager : MonoBehaviour
         for (int i = 0; i < upgradeButtons.Length; i++)
         {
             int upgradeIndex = i;
+
             upgradeButtons[i].onClick.RemoveAllListeners();
             upgradeButtons[i].onClick.AddListener(
                 () => ChooseUpgrade(upgradeIndex));
@@ -84,9 +93,11 @@ public class RunManager : MonoBehaviour
         if (upgradePanel != null)
             upgradePanel.SetActive(false);
 
+        if (scoreManager != null)
+            scoreManager.ResetScores();
+
         choosingUpgrade = false;
         round++;
-
         Time.timeScale = 1f;
 
         if (ball != null)
@@ -94,6 +105,7 @@ public class RunManager : MonoBehaviour
             float newSpeed = startingBallSpeed
                            + (round - 1) * speedIncreasePerRound
                            + speedBonus;
+
             ball.SetSpeed(newSpeed);
         }
 
