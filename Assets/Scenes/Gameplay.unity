@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RunManager
   ball: {fileID: 640755962}
   playerPaddle: {fileID: 2064096344}
+  scoreManager: {fileID: 647993483}
   upgradePanel: {fileID: 2065388886}
   upgradeButtons:
   - {fileID: 1256961160}
@@ -846,7 +847,6 @@ MonoBehaviour:
   playerScoresHere: 0
   scoreManager: {fileID: 647993483}
   ball: {fileID: 640755962}
-  runManager: {fileID: 37942682}
 --- !u!61 &540881905
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1435,7 +1435,6 @@ MonoBehaviour:
   playerScoreText: {fileID: 1617197546}
   cpuScoreText: {fileID: 501759703}
   runManager: {fileID: 37942682}
-  cpu: {fileID: 1926998391}
 --- !u!4 &647993484
 Transform:
   m_ObjectHideFlags: 0
@@ -2704,7 +2703,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2065388886}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2928,7 +2927,6 @@ MonoBehaviour:
   playerScoresHere: 1
   scoreManager: {fileID: 647993483}
   ball: {fileID: 640755962}
-  runManager: {fileID: 37942682}
 --- !u!61 &2097128501
 BoxCollider2D:
   m_ObjectHideFlags: 0
