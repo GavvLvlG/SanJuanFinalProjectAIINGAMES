@@ -5,6 +5,8 @@ public class Ball : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float startSpeed = 5f;
 
+    public bool IsMoving => rb != null && rb.linearVelocity.sqrMagnitude > 0.01f;
+    
     private void Awake()
     {
         if (rb == null)

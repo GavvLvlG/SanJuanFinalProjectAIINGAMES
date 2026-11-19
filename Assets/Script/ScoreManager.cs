@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public interface IScoreManager
 {
     void CpuScores();
@@ -13,6 +13,10 @@ public class ScoreManager : MonoBehaviour, IScoreManager
     [SerializeField] private TMP_Text playerScoreText;
     [SerializeField] private TMP_Text cpuScoreText;
     [SerializeField] private RunManager runManager;
+
+    [SerializeField] private GameObject gameOverScreen;
+    
+    private bool gameOver;
 
     private int playerScore;
     private int cpuScore;
@@ -44,6 +48,14 @@ public class ScoreManager : MonoBehaviour, IScoreManager
     {
         cpuScore++;
         UpdateUI();
+       if (cpuScore >= 5)
+{
+    gameOver = true;
+    Time.timeScale = 0f;
+
+    if (gameOverScreen != null)
+        gameOverScreen.SetActive(true);
+}
     }
 
     public void ResetScores()
@@ -51,10 +63,24 @@ public class ScoreManager : MonoBehaviour, IScoreManager
     playerScore = 0;
     cpuScore = 0;
     pointsSinceUpgrade = 0;
+    gameOver = false;
+
+    if (gameOverScreen != null)
+        gameOverScreen.SetActive(false);
+
     UpdateUI();
 }
-
-    private void UpdateUI()
+public void RestartGame()
+{
+    Time.timeScale = 1f; // Restore time before reloading
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+}
+public void GoToMainMenu()
+{
+    Time.timeScale = 1f; // Unpause before changing scenes
+    UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+}
+ private void UpdateUI()
     {
         if (playerScoreText != null)
             playerScoreText.text = playerScore.ToString();
