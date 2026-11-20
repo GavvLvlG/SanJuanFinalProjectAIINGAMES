@@ -1844,6 +1844,7 @@ MonoBehaviour:
   playerScoreText: {fileID: 1617197546}
   cpuScoreText: {fileID: 501759703}
   runManager: {fileID: 37942682}
+  cpu: {fileID: 1926998391}
   gameOverScreen: {fileID: 1181695144}
 --- !u!4 &647993484
 Transform:
