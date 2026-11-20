@@ -115,7 +115,7 @@ public class CPU : MonoBehaviour
 
     private bool IsBallMovingAwayFromCpu()
     {
-        // Works whether the CPU is on the right or left of the ball.
+       
         bool cpuIsRightOfBall = transform.position.x > ball.position.x;
         return cpuIsRightOfBall
             ? ballBody.linearVelocity.x < 0f

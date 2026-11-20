@@ -13,6 +13,7 @@ public class ScoreManager : MonoBehaviour, IScoreManager
     [SerializeField] private TMP_Text playerScoreText;
     [SerializeField] private TMP_Text cpuScoreText;
     [SerializeField] private RunManager runManager;
+    [SerializeField] private CPU cpu;
 
     [SerializeField] private GameObject gameOverScreen;
     
@@ -41,6 +42,8 @@ public class ScoreManager : MonoBehaviour, IScoreManager
         {
             pointsSinceUpgrade -= 5;
             runManager.PlayerScoredRound();
+            cpu.ChooseRandomUpgrade();
+            
         }
     }
 
