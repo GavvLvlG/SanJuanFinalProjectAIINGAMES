@@ -178,7 +178,10 @@ public class CPU : MonoBehaviour
 
     public void ApplyPlayerMovementSlow()
     {
-        currentMoveSpeed = Mathf.Max(1f, currentMoveSpeed - playerMoveSpeedReduction);
+        currentMoveSpeed = Mathf.Max(
+            1f,
+            currentMoveSpeed - playerMoveSpeedReduction
+        );
     }
 
     public void ApplyPlayerDecisionDelay()
