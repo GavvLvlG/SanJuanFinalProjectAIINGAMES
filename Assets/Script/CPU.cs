@@ -9,6 +9,8 @@ public class CPU : MonoBehaviour
         Recover
     }
 
+    private const int CpuUpgradeCount = 4;
+
     [Header("References")]
     [SerializeField] private Transform ball;
     [SerializeField] private Ball gameBall;
@@ -21,15 +23,24 @@ public class CPU : MonoBehaviour
     [SerializeField, Min(0f)] private float decisionInterval = 0.8f;
     [SerializeField, Range(0f, 1f)] private float followBallChance = 0.65f;
 
-    [Header("Upgrades")]
+    [Header("CPU power-ups")]
     [SerializeField, Min(0f)] private float paddleWidthIncrease = 0.5f;
     [SerializeField, Min(0f)] private float moveSpeedIncrease = 1f;
+    [SerializeField, Min(0f)] private float followBallChanceIncrease = 0.1f;
+    [SerializeField, Min(0f)] private float decisionIntervalDecrease = 0.15f;
+
+    [Header("Player power-ups")]
+    [SerializeField, Min(0f)] private float playerPaddleShrink = 0.25f;
+    [SerializeField, Min(0f)] private float playerMoveSpeedReduction = 1f;
+    [SerializeField, Min(0f)] private float playerDecisionDelay = 0.3f;
 
     private State currentState = State.WaitForServe;
     private Rigidbody2D ballBody;
     private float targetY;
     private float nextDecisionTime;
     private float currentMoveSpeed;
+    private float currentFollowBallChance;
+    private float currentDecisionInterval;
 
     private void Awake()
     {
@@ -40,6 +51,8 @@ public class CPU : MonoBehaviour
             ballBody = ball.GetComponent<Rigidbody2D>();
 
         currentMoveSpeed = moveSpeed;
+        currentFollowBallChance = followBallChance;
+        currentDecisionInterval = decisionInterval;
     }
 
     private void Update()
@@ -85,9 +98,9 @@ public class CPU : MonoBehaviour
 
     private void ChooseTarget()
     {
-        nextDecisionTime = Time.time + decisionInterval;
+        nextDecisionTime = Time.time + currentDecisionInterval;
 
-        targetY = Random.value < followBallChance
+        targetY = Random.value < currentFollowBallChance
             ? Mathf.Clamp(ball.position.y, minY, maxY)
             : Random.Range(minY, maxY);
     }
@@ -115,7 +128,6 @@ public class CPU : MonoBehaviour
 
     private bool IsBallMovingAwayFromCpu()
     {
-        // Works whether the CPU is on the right or left of the ball.
         bool cpuIsRightOfBall = transform.position.x > ball.position.x;
         return cpuIsRightOfBall
             ? ballBody.linearVelocity.x < 0f
@@ -124,19 +136,53 @@ public class CPU : MonoBehaviour
 
     public void ChooseRandomUpgrade()
     {
-        int upgrade = Random.Range(0, 2);
+        int upgrade = Random.Range(0, CpuUpgradeCount);
 
         switch (upgrade)
         {
             case 0:
                 Vector3 scale = transform.localScale;
-                scale.y += paddleWidthIncrease; 
+                scale.y += paddleWidthIncrease;
                 transform.localScale = scale;
+                Debug.Log("CPU power-up: wider paddle.", this);
                 break;
 
             case 1:
                 currentMoveSpeed += moveSpeedIncrease;
+                Debug.Log("CPU power-up: faster movement.", this);
+                break;
+
+            case 2:
+                currentFollowBallChance = Mathf.Clamp01(
+                    currentFollowBallChance + followBallChanceIncrease
+                );
+                Debug.Log("CPU power-up: improved tracking.", this);
+                break;
+
+            case 3:
+                currentDecisionInterval = Mathf.Max(
+                    0.1f,
+                    currentDecisionInterval - decisionIntervalDecrease
+                );
+                Debug.Log("CPU power-up: faster reactions.", this);
                 break;
         }
+    }
+
+    public void ApplyPlayerPaddleShrink()
+    {
+        Vector3 scale = transform.localScale;
+        scale.y = Mathf.Max(0.5f, scale.y - playerPaddleShrink);
+        transform.localScale = scale;
+    }
+
+    public void ApplyPlayerMovementSlow()
+    {
+        currentMoveSpeed = Mathf.Max(1f, currentMoveSpeed - playerMoveSpeedReduction);
+    }
+
+    public void ApplyPlayerDecisionDelay()
+    {
+        currentDecisionInterval += playerDecisionDelay;
     }
 }
