@@ -23,6 +23,11 @@ public class CPU : MonoBehaviour
     [SerializeField, Min(0f)] private float decisionInterval = 0.8f;
     [SerializeField, Range(0f, 1f)] private float followBallChance = 0.65f;
 
+    [Header("Obstacle Avoidance")]
+    [SerializeField] private LayerMask obstacleLayers;
+    [SerializeField, Min(0f)] private float obstacleCheckDistance = 0.5f;
+    [SerializeField, Min(0f)] private float obstacleWaitTime = 0.2f;
+
     [Header("CPU power-ups")]
     [SerializeField, Min(0f)] private float paddleWidthIncrease = 0.5f;
     [SerializeField, Min(0f)] private float moveSpeedIncrease = 1f;
@@ -41,6 +46,7 @@ public class CPU : MonoBehaviour
     private float currentMoveSpeed;
     private float currentFollowBallChance;
     private float currentDecisionInterval;
+    private float obstacleWaitUntil;
 
     private void Awake()
     {
@@ -107,6 +113,29 @@ public class CPU : MonoBehaviour
 
     private void MoveTowardTarget()
     {
+        float difference = targetY - transform.position.y;
+
+        if (Mathf.Abs(difference) <= deadZone)
+            return;
+
+        float direction = Mathf.Sign(difference);
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position,
+            Vector2.up * direction,
+            obstacleCheckDistance,
+            obstacleLayers
+        );
+
+        if (hit.collider != null)
+        {
+            obstacleWaitUntil = Time.time + obstacleWaitTime;
+            return;
+        }
+
+        if (Time.time < obstacleWaitUntil)
+            return;
+
         float newY = Mathf.MoveTowards(
             transform.position.y,
             targetY,
@@ -114,6 +143,7 @@ public class CPU : MonoBehaviour
         );
 
         newY = Mathf.Clamp(newY, minY, maxY);
+
         transform.position = new Vector3(
             transform.position.x,
             newY,
@@ -123,12 +153,14 @@ public class CPU : MonoBehaviour
 
     private bool IsBallMoving()
     {
-        return ballBody != null && ballBody.linearVelocity.sqrMagnitude > 0.01f;
+        return ballBody != null &&
+               ballBody.linearVelocity.sqrMagnitude > 0.01f;
     }
 
     private bool IsBallMovingAwayFromCpu()
     {
         bool cpuIsRightOfBall = transform.position.x > ball.position.x;
+
         return cpuIsRightOfBall
             ? ballBody.linearVelocity.x < 0f
             : ballBody.linearVelocity.x > 0f;
@@ -141,11 +173,13 @@ public class CPU : MonoBehaviour
         switch (upgrade)
         {
             case 0:
-                Vector3 scale = transform.localScale;
-                scale.y += paddleWidthIncrease;
-                transform.localScale = scale;
-                Debug.Log("CPU power-up: wider paddle.", this);
-                break;
+                {
+                    Vector3 scale = transform.localScale;
+                    scale.y += paddleWidthIncrease;
+                    transform.localScale = scale;
+                    Debug.Log("CPU power-up: wider paddle.", this);
+                    break;
+                }
 
             case 1:
                 currentMoveSpeed += moveSpeedIncrease;

@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 243675821}
   - component: {fileID: 243675820}
   - component: {fileID: 243675819}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: bottomBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1054,7 +1054,7 @@ GameObject:
   - component: {fileID: 546183960}
   - component: {fileID: 546183959}
   - component: {fileID: 546183958}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1594,7 +1594,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 000000002d133e89
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2860,6 +2860,11 @@ MonoBehaviour:
   deadZone: 0.15
   decisionInterval: 0.8
   followBallChance: 0.5
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  obstacleCheckDistance: 0.5
+  obstacleWaitTime: 0.2
   paddleWidthIncrease: 0.5
   moveSpeedIncrease: 1
   followBallChanceIncrease: 0.1
