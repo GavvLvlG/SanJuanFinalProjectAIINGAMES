@@ -32,6 +32,19 @@ public class Ball : MonoBehaviour
         rb.linearVelocity = rb.linearVelocity.normalized * speed;
 }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameAudio gameAudio = GameAudio.Instance;
+        if (gameAudio == null)
+            return;
+
+        string paddleName = collision.gameObject.name;
+        if (paddleName == "Paddle1")
+            gameAudio.PlayPaddleSound(true);
+        else if (paddleName == "Paddle2")
+            gameAudio.PlayPaddleSound(false);
+    }
+
     public void Launch()
     {
         if (rb == null)

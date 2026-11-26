@@ -24,6 +24,13 @@ public class RunManager : MonoBehaviour, IRunManager
     private const int ScoreMultiplierIncrease = 1;
     private const float BallSpeedBonusPerUpgrade = 1f;
 
+    private const string RoundsPlayedKey = "RoundsPlayed";
+
+    public static int GetRoundsPlayed()
+{
+    return PlayerPrefs.GetInt(RoundsPlayedKey, 0);
+}
+
     private static readonly PlayerUpgrade[] PlayerUpgradePool =
     {
         PlayerUpgrade.WiderPaddle,
@@ -218,6 +225,10 @@ public class RunManager : MonoBehaviour, IRunManager
 
         if (ball != null)
             ball.SetSpeed(newSpeed);
+
+        int roundsPlayed = PlayerPrefs.GetInt(RoundsPlayedKey, 0) + 1;
+        PlayerPrefs.SetInt(RoundsPlayedKey, roundsPlayed);
+        PlayerPrefs.Save();
 
         Debug.Log($"Round {round} started. Score multiplier: {scoreMultiplier}");
     }
